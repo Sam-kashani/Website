@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Zomerkampen</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="container mt-4">
-    <h1 class="mb-4">Lijst van Zomerkampen</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Onze Zomerkampen</h2>
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            Filters tonen
+        </button>
+    </div>
 
-    <button class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#filterModal">
-        Filters
-    </button>
-
+    <!-- Modal -->
     <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+            <div class="modal-content rounded-4 shadow">
                 <form method="get" th:action="@{/camps}">
                     <div class="modal-header">
-                        <h5 class="modal-title">Filter Zomerkampen</h5>
+                        <h5 class="modal-title fw-bold">Filter Zomerkampen</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Sluiten"></button>
                     </div>
                     <div class="modal-body">
@@ -37,45 +40,44 @@
                                 <input type="number" class="form-control" name="minParticipants" th:value="${param.minParticipants}">
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">Maximum prijs</label>
+                                <label class="form-label">Maximum prijs (€)</label>
                                 <input type="number" step="0.01" class="form-control" name="maxPrice" th:value="${param.maxPrice}">
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Type Kamp</label><br>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="campType" value="Avontuur" th:checked="${param.campType == 'Avontuur'}">
-                                    <label class="form-check-label">Avontuur</label>
+                                    <input class="form-check-input" type="radio" name="campType" value="Avontuurlijk" th:checked="${param.campType == 'Avontuurlijk'}">
+                                    <label class="form-check-label">Avontuurlijk</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="campType" value="Creatief" th:checked="${param.campType == 'Creatief'}">
                                     <label class="form-check-label">Creatief</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="campType" value="" th:checked="${param.campType == null || param.campType == ''}">
+                                    <input class="form-check-input" type="radio" name="campType" value="Techniek" th:checked="${param.campType == 'Techniek'}">
                                     <label class="form-check-label">Techniek</label>
                                 </div>
-                                <input class="form-check-input" type="radio" name="campType" value=""
-                                       th:checked="${param.campType == null || param.campType == ''}">
-                                <label class="form-check-label">Alle types</label>
-
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="campType" value="" th:checked="${param.campType == null or param.campType == ''}">
+                                    <label class="form-check-label">Alle types</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Sluiten</button>
-                        <button type="submit" class="btn btn-primary">Zoek</button>
+                        <button type="submit" class="btn btn-primary">Zoeken</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <div class="col" th:each="camp : ${camps}">
-            <div class="card h-100">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${camp.name}">Kampnaam</h5>
+                    <h5 class="card-title fw-bold" th:text="${camp.name}">Kampnaam</h5>
                     <p class="card-text">
                         <strong>Locatie:</strong> <span th:text="${camp.location}"></span><br>
                         <strong>Prijs:</strong> €<span th:text="${camp.price}"></span><br>
@@ -83,7 +85,9 @@
                         <strong>Type:</strong> <span th:text="${camp.type}"></span><br>
                         <strong>Beschrijving:</strong> <span th:text="${camp.description}"></span>
                     </p>
-                    <a th:href="@{|/campgreeting/${camp.id}|}" class="btn btn-outline-secondary">Details</a>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a th:href="@{|/campgreeting/${camp.id}|}" class="btn btn-outline-secondary w-100">Bekijk kamp</a>
                 </div>
             </div>
         </div>

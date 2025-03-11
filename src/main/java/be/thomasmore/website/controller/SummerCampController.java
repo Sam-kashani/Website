@@ -37,7 +37,7 @@ public class SummerCampController {
         model.addAttribute("prevId", prevId);
         model.addAttribute("nextId", nextId);
 
-        String greeting = campFromDb.map(c -> "Welkom op het kamp " + c.getName() + " in " + c.getLocation())
+        String greeting = campFromDb.map(c -> "Maak kennis met onze " + c.getName() + " in " + c.getLocation())
                 .orElse("Geen kamp gevonden.");
         model.addAttribute("greeting", greeting);
 
