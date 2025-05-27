@@ -16,7 +16,6 @@ public class Participant {
     private String email;
     private int age;
 
-    // Getters en setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 
