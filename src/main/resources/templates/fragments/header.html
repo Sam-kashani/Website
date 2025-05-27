@@ -17,11 +17,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" sec:authorize="hasAuthority('ROLE_USER')">
+                        <a class="nav-link" th:href="@{/myregistrations}">Mijn kampen</a>
+                    </li>
                     <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
                         <a class="nav-link" th:href="@{/registrations}">Alle Inschrijvingen</a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                        <a class="nav-link" th:href="@{/registrations/new}">Nieuwe Inschrijving</a>
+                        <a class="nav-link" th:href="@{/participants}">Alle gebruikers</a>
                     </li>
                 </ul>
 
