@@ -2,14 +2,16 @@ package be.thomasmore.website.controller;
 
 import be.thomasmore.website.model.SummerCamp;
 import be.thomasmore.website.model.Activity;
-import be.thomasmore.website.repository.SummerCampRepository;
-import be.thomasmore.website.repository.ActivityRepository;
+import be.thomasmore.website.repositories.SummerCampRepository;
+import be.thomasmore.website.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +43,11 @@ public class SummerCampController {
                 .orElse("Geen kamp gevonden.");
         model.addAttribute("greeting", greeting);
 
-        List<Activity> activities = activityRepository.findAll();
+        Iterable<Activity> iterable = activityRepository.findAll();
+        List<Activity> activities = new ArrayList<>();
+        for (Activity a : iterable) {
+            activities.add(a);
+        }
         model.addAttribute("activities", activities);
 
         return "campgreeting";
@@ -49,14 +55,14 @@ public class SummerCampController {
 
     @GetMapping("/camps")
     public String filterCamps(Model model,
-                              @org.springframework.web.bind.annotation.RequestParam(required = false) String name,
-                              @org.springframework.web.bind.annotation.RequestParam(required = false) String location,
-                              @org.springframework.web.bind.annotation.RequestParam(required = false) Integer minParticipants,
-                              @org.springframework.web.bind.annotation.RequestParam(required = false) Double maxPrice,
-                              @org.springframework.web.bind.annotation.RequestParam(required = false) String campType) {
+                              @RequestParam(required = false) String name,
+                              @RequestParam(required = false) String location,
+                              @RequestParam(required = false) Integer minParticipants,
+                              @RequestParam(required = false) Double maxPrice,
+                              @RequestParam(required = false) String campType) {
 
         List<SummerCamp> camps = summerCampRepository.findByFilters(name, location, minParticipants, maxPrice, campType);
         model.addAttribute("camps", camps);
-        return "camps/list";
+        return "list";
     }
 }

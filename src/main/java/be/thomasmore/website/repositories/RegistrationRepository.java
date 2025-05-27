@@ -1,7 +1,6 @@
-package be.thomasmore.website.repository;
+package be.thomasmore.website.repositories;
 
 import be.thomasmore.website.model.Registration;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

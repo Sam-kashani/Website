@@ -1,4 +1,4 @@
-package be.thomasmore.website.repository;
+package be.thomasmore.website.repositories;
 
 import be.thomasmore.website.model.SummerCamp;
 import org.springframework.data.jpa.repository.Query;

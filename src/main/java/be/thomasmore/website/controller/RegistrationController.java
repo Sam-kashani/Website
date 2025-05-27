@@ -3,9 +3,9 @@ package be.thomasmore.website.controller;
 import be.thomasmore.website.model.Registration;
 import be.thomasmore.website.model.Participant;
 import be.thomasmore.website.model.RegistrationForm;
-import be.thomasmore.website.repository.RegistrationRepository;
-import be.thomasmore.website.repository.ParticipantRepository;
-import be.thomasmore.website.repository.SummerCampRepository;
+import be.thomasmore.website.repositories.RegistrationRepository;
+import be.thomasmore.website.repositories.ParticipantRepository;
+import be.thomasmore.website.repositories.SummerCampRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 
 @Controller
 public class RegistrationController {
@@ -32,19 +31,17 @@ public class RegistrationController {
         model.addAttribute("registrations", registrationRepository.findAll());
         model.addAttribute("participants", participantRepository.findAll());
         model.addAttribute("camps", summerCampRepository.findAll());
-        return "registrations/list_all";
+        return "list_all";
     }
 
-
-    @GetMapping("/registration/new")
+    @GetMapping("/registrations/new")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("registrationForm", new RegistrationForm()); // <- hier dit
+        model.addAttribute("registrationForm", new RegistrationForm());
         model.addAttribute("camps", summerCampRepository.findAll());
-        return "registrations/new";
+        return "new";
     }
 
-
-    @PostMapping("/registration/save")
+    @PostMapping("/registrations/save")
     public String saveRegistration(@ModelAttribute RegistrationForm form) {
         Participant participant = new Participant();
         participant.setName(form.getParticipantName());
@@ -63,16 +60,16 @@ public class RegistrationController {
         return "redirect:/registrations";
     }
 
-    @GetMapping("/registration/edit/{id}")
+    @GetMapping("/registrations/edit/{id}")
     public String showEditForm(@PathVariable Integer id, Model model) {
         Registration registration = registrationRepository.findById(id).orElse(null);
         model.addAttribute("registration", registration);
         model.addAttribute("participants", participantRepository.findAll());
         model.addAttribute("camps", summerCampRepository.findAll());
-        return "registrations/edit";
+        return "edit";
     }
 
-    @PostMapping("/registration/update")
+    @PostMapping("/registrations/update")
     public String updateRegistration(@ModelAttribute Registration registration) {
         registrationRepository.save(registration);
         return "redirect:/registrations";
