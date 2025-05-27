@@ -50,4 +50,15 @@ INSERT INTO registration (id, participant_id, summer_camp_id, registration_date,
                                                                                                         (7, 7, 7, '2025-03-26', '12:45:00'),
                                                                                                         (8, 8, 8, '2025-03-27', '16:00:00'),
                                                                                                         (9, 9, 9, '2025-03-28', '10:30:00'),
-                                                                                                        (10, 10, 10, '2025-03-29', '11:45:00');
+                                                                                                   (10, 10, 10, '2025-03-29', '11:45:00');
+-- Admin user
+INSERT INTO users (username, password, enabled)
+VALUES ('admin', '$2a$10$r.f5amuel/u71uXHNCGdbetrwgzbGvM8YOhnqghLoi2/ZLmnn1gty', true);
+INSERT INTO authorities (username, authority)
+VALUES ('admin', 'ROLE_ADMIN');
+
+-- Normal user
+INSERT INTO users (username, password, enabled)
+VALUES ('user', '$2a$10$rR7c3KQS1SeqsHLAd2QIieh7pqyJ2nh1xlluEStUxh1v02zkG7Aby', true);
+INSERT INTO authorities (username, authority)
+VALUES ('user', 'ROLE_USER');
