@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Mijn Inschrijvingen</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div class="container mt-5">
+    <h2 class="fw-bold mb-4">Mijn Inschrijvingen</h2>
+
+    <div th:if="${#lists.isEmpty(registrations)}">
+        <p class="text-muted">Je bent momenteel niet ingeschreven voor een kamp.</p>
+    </div>
+
+    <div class="list-group" th:each="registration : ${registrations}">
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1 fw-semibold" th:text="${registration.camp.name}">Kampnaam</h5>
+                <p class="mb-0 text-muted">
+                    <span th:text="${#temporals.format(registration.registrationDate, 'dd/MM/yyyy')}">Datum</span>
+                    om
+                    <span th:text="${#temporals.format(registration.registrationTime, 'HH:mm')}">Tijd</span>
+                </p>
+            </div>
+            <form th:action="@{/myregistrations}" method="post" class="ms-3">
+                <input type="hidden" name="registrationId" th:value="${registration.id}" />
+                <button type="submit" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Ben je zeker dat je je wil uitschrijven?')">
+                    I’m not going!
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
