@@ -13,17 +13,18 @@ INSERT INTO summer_camp (id, name, location, max_participants, price, descriptio
 
 
 -- Participants
-INSERT INTO participant (name, email, age) VALUES
-                                                   ('Lotte Janssen', 'lotte.j@example.com', 12),
-                                                   ('Arne Peeters', 'arne.p@example.com', 14),
-                                                   ('Mila De Smet', 'mila.d@example.com', 13),
-                                                   ('Jules Maes', 'jules.m@example.com', 11),
-                                                   ('Nora Willems', 'nora.w@example.com', 15),
-                                                   ('Seppe Goossens', 'seppe.g@example.com', 12),
-                                                   ('Emma Van Dijk', 'emma.v@example.com', 13),
-                                                   ('Liam Verstraeten', 'liam.v@example.com', 14),
-                                                   ('Zoë Hermans', 'zoe.h@example.com', 11),
-                                                   ('Finn Claes', 'finn.c@example.com', 13);
+INSERT INTO participant (id, name, email, age) VALUES
+                                                   (1, 'Lotte Janssen', 'lotte.j@example.com', 12),
+                                                   (2, 'Arne Peeters', 'arne.p@example.com', 14),
+                                                   (3, 'Mila De Smet', 'mila.d@example.com', 13),
+                                                   (4, 'Jules Maes', 'jules.m@example.com', 11),
+                                                   (5, 'Nora Willems', 'nora.w@example.com', 15),
+                                                   (6, 'Seppe Goossens', 'seppe.g@example.com', 12),
+                                                   (7, 'Emma Van Dijk', 'emma.v@example.com', 13),
+                                                   (8, 'Liam Verstraeten', 'liam.v@example.com', 14),
+                                                   (9, 'Zoë Hermans', 'zoe.h@example.com', 11),
+                                                   (10, 'Finn Claes', 'finn.c@example.com', 13);
+
 
 -- Activities
 INSERT INTO activity (id, name, description, summer_camp_id) VALUES
@@ -39,14 +40,14 @@ INSERT INTO activity (id, name, description, summer_camp_id) VALUES
                                                                  (10, 'Robot bouwen', 'Techniekactiviteit met robotjes', 9);
 
 -- Registrations (ID wordt automatisch gegenereerd)
-INSERT INTO registration (participant_id, summer_camp_id, registration_date, registration_time) VALUES
-                                                                                                    (1, 1, '2025-03-20', '10:00:00'),
-                                                                                                    (2, 2, '2025-03-21', '11:00:00'),
-                                                                                                    (3, 3, '2025-03-22', '09:30:00'),
-                                                                                                    (4, 4, '2025-03-23', '14:15:00'),
-                                                                                                    (5, 5, '2025-03-24', '13:00:00'),
-                                                                                                    (6, 6, '2025-03-25', '15:00:00'),
-                                                                                                    (7, 7, '2025-03-26', '12:45:00'),
-                                                                                                    (8, 8, '2025-03-27', '16:00:00'),
-                                                                                                    (9, 9, '2025-03-28', '10:30:00'),
-                                                                                                    (10,10,'2025-03-29', '11:45:00');
+INSERT INTO registration (id, participant_id, summer_camp_id, registration_date, registration_time) VALUES
+                                                                                                        (1, 1, 1, '2025-03-20', '10:00:00'),
+                                                                                                        (2, 2, 2, '2025-03-21', '11:00:00'),
+                                                                                                        (3, 3, 3, '2025-03-22', '09:30:00'),
+                                                                                                        (4, 4, 4, '2025-03-23', '14:15:00'),
+                                                                                                        (5, 5, 5, '2025-03-24', '13:00:00'),
+                                                                                                        (6, 6, 6, '2025-03-25', '15:00:00'),
+                                                                                                        (7, 7, 7, '2025-03-26', '12:45:00'),
+                                                                                                        (8, 8, 8, '2025-03-27', '16:00:00'),
+                                                                                                        (9, 9, 9, '2025-03-28', '10:30:00'),
+                                                                                                        (10, 10, 10, '2025-03-29', '11:45:00');
