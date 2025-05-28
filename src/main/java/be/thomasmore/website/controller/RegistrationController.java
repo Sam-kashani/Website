@@ -2,7 +2,7 @@ package be.thomasmore.website.controller;
 
 import be.thomasmore.website.model.Registration;
 import be.thomasmore.website.model.Participant;
-import be.thomasmore.website.model.RegistrationForm;
+import be.thomasmore.website.model.SummerCamp;
 import be.thomasmore.website.repositories.RegistrationRepository;
 import be.thomasmore.website.repositories.ParticipantRepository;
 import be.thomasmore.website.repositories.SummerCampRepository;
@@ -11,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.*;
 
 @Controller
 public class RegistrationController {
@@ -27,51 +29,122 @@ public class RegistrationController {
     private SummerCampRepository summerCampRepository;
 
     @GetMapping("/registrations")
-    public String listAllRegistrations(Model model) {
-        model.addAttribute("registrations", registrationRepository.findAll());
-        model.addAttribute("participants", participantRepository.findAll());
-        model.addAttribute("camps", summerCampRepository.findAll());
-        return "list_all";
+    public String listRegistrations(Model model) {
+        List<Registration> registrations = new ArrayList<>();
+        registrationRepository.findAll().forEach(registrations::add);
+
+        model.addAttribute("registrations", registrations);
+        return "allRegistered";
     }
 
-    @GetMapping("/registrations/new")
-    public String showRegistrationForm(Model model) {
-        model.addAttribute("registrationForm", new RegistrationForm());
-        model.addAttribute("camps", summerCampRepository.findAll());
-        return "new";
-    }
 
-    @PostMapping("/registrations/save")
-    public String saveRegistration(@ModelAttribute RegistrationForm form) {
-        Participant participant = new Participant();
-        participant.setName(form.getParticipantName());
-        participant.setEmail(form.getParticipantEmail());
-        participant.setAge(form.getParticipantAge());
-        participantRepository.save(participant);
 
-        Registration registration = new Registration();
-        registration.setParticipantId(participant.getId());
-        registration.setSummerCampId(form.getSummerCampId());
-        registration.setRegistrationDate(LocalDate.now());
-        registration.setRegistrationTime(LocalTime.now().withSecond(0).withNano(0));
-
-        registrationRepository.save(registration);
-
-        return "redirect:/registrations";
-    }
 
     @GetMapping("/registrations/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
-        Registration registration = registrationRepository.findById(id).orElse(null);
-        model.addAttribute("registration", registration);
-        model.addAttribute("participants", participantRepository.findAll());
-        model.addAttribute("camps", summerCampRepository.findAll());
-        return "edit";
+    public String showParticipantDetailsFromRegistration(@PathVariable Integer id, Model model) {
+        Registration registration = registrationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Inschrijving niet gevonden"));
+
+        Participant participant = registration.getParticipant();
+        List<Registration> allRegistrations = registrationRepository.findByParticipant(participant);
+
+        List<SummerCamp> registeredCamps = new ArrayList<>();
+        for (Registration reg : allRegistrations) {
+            registeredCamps.add(reg.getCamp());
+        }
+
+        model.addAttribute("participant", participant);
+        model.addAttribute("camps", registeredCamps);
+
+        return "participantDetails";
     }
 
-    @PostMapping("/registrations/update")
+
+
+
+
+    @PostMapping("/update")
     public String updateRegistration(@ModelAttribute Registration registration) {
         registrationRepository.save(registration);
         return "redirect:/registrations";
     }
+    @PostMapping("/register")
+    public String registerForCamp(@RequestParam Integer campId, Principal principal) {
+        if (principal == null) return "redirect:/login";
+
+        Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
+        if (optionalParticipant.isEmpty()) return "redirect:/login";
+
+        Participant participant = optionalParticipant.get();
+        SummerCamp camp = summerCampRepository.findById(campId)
+                .orElseThrow(() -> new RuntimeException("Camp not found"));
+
+        boolean alreadyRegistered = registrationRepository.existsByParticipantAndCamp(participant, camp);
+        if (!alreadyRegistered) {
+            Registration registration = new Registration();
+            registration.setParticipant(participant);
+            registration.setCamp(camp);
+            registration.setRegistrationDate(LocalDate.now());
+            registration.setRegistrationTime(LocalTime.now());
+            registrationRepository.save(registration);
+        }
+
+        return "redirect:/campgreeting/" + campId;
+    }
+
+    @PostMapping("/admin/unregister")
+    public String unregisterAsAdmin(@RequestParam Integer participantId, @RequestParam Integer campId) {
+        Participant participant = participantRepository.findById(participantId)
+                .orElseThrow(() -> new RuntimeException("Participant niet gevonden"));
+        SummerCamp camp = summerCampRepository.findById(campId)
+                .orElseThrow(() -> new RuntimeException("Kamp niet gevonden"));
+        Registration registration = registrationRepository.findByParticipantAndCamp(participant, camp);
+        if (registration != null) {
+            registrationRepository.delete(registration);
+        }
+        return "redirect:/registrations";
+    }
+
+
+
+
+    @GetMapping("/myregistrations")
+    public String viewMyRegistrations(Model model, Principal principal) {
+        if (principal == null) {
+            model.addAttribute("registrations", Collections.emptyList());
+            return "myRegistrations";
+        }
+
+        Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
+        if (optionalParticipant.isPresent()) {
+            List<Registration> registrations = registrationRepository.findByParticipant(optionalParticipant.get());
+            model.addAttribute("registrations", registrations);
+        } else {
+            model.addAttribute("registrations", Collections.emptyList());
+        }
+
+        return "myRegistrations";
+    }
+
+    @PostMapping("/unregister/{campId}")
+    public String unregister(@PathVariable Integer campId, Principal principal) {
+        String username = principal.getName();
+        Participant participant = participantRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Participant niet gevonden"));
+
+        SummerCamp camp = summerCampRepository.findById(campId)
+                .orElseThrow(() -> new RuntimeException("Kamp niet gevonden"));
+
+        Registration registration = registrationRepository.findByParticipantAndCamp(participant, camp);
+        if (registration != null) {
+            registrationRepository.delete(registration);
+        }
+
+        return "redirect:/campgreeting/" + campId;
+    }
+
+
+
 }
+
+
