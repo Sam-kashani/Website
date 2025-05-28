@@ -1,9 +1,7 @@
 package be.thomasmore.website.model;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.Set;
 
 @Entity
 public class Participant {
@@ -14,6 +12,9 @@ public class Participant {
     private String name;
     private String email;
     private int age;
+    private String username;
+    @ManyToMany
+    private Set<SummerCamp> camps;
 
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -26,4 +27,14 @@ public class Participant {
 
     public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public Set<SummerCamp> getCamps() { return camps; }
+    public void setCamps(Set<SummerCamp> camps) { this.camps = camps; }
+
 }
