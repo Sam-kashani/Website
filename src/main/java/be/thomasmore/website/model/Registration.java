@@ -1,9 +1,6 @@
 package be.thomasmore.website.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,25 +10,53 @@ public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer participantId;
-    private Integer summerCampId;
     private LocalDate registrationDate;
     private LocalTime registrationTime;
+    @ManyToOne
+    @JoinColumn(name = "participant_id") // FK in REGISTRATION table
+    private Participant participant;
 
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    @ManyToOne
+    @JoinColumn(name = "camp_id") // FK in REGISTRATION table
+    private SummerCamp camp;
 
-    public Integer getParticipantId() { return participantId; }
-    public void setParticipantId(Integer participantId) { this.participantId = participantId; }
+    public Integer getId() {
+        return id;
+    }
 
-    public Integer getSummerCampId() { return summerCampId; }
-    public void setSummerCampId(Integer summerCampId) { this.summerCampId = summerCampId; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public LocalDate getRegistrationDate() { return registrationDate; }
-    public void setRegistrationDate(LocalDate registrationDate) { this.registrationDate = registrationDate; }
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
 
-    public LocalTime getRegistrationTime() { return registrationTime; }
-    public void setRegistrationTime(LocalTime registrationTime) { this.registrationTime = registrationTime; }
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public LocalTime getRegistrationTime() {
+        return registrationTime;
+    }
+
+    public void setRegistrationTime(LocalTime registrationTime) {
+        this.registrationTime = registrationTime;
+    }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
+    }
+
+    public SummerCamp getCamp() {
+        return camp;
+    }
+
+    public void setCamp(SummerCamp camp) {
+        this.camp = camp;
+    }
 }
-
-
