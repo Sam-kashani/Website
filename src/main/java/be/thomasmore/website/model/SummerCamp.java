@@ -2,6 +2,9 @@ package be.thomasmore.website.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+
+import java.util.Set;
 
 @Entity
 public class SummerCamp {
@@ -13,6 +16,16 @@ public class SummerCamp {
     private double price;
     private String description;
     private String type;
+    @ManyToMany(mappedBy = "camps")
+    private Set<Participant> participants;
+
+    public Set<Participant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(Set<Participant> participants) {
+        this.participants = participants;
+    }
 
     public String getType() {
         return type;
