@@ -37,9 +37,6 @@ public class RegistrationController {
         return "allRegistered";
     }
 
-
-
-
     @GetMapping("/registrations/edit/{id}")
     public String showParticipantDetailsFromRegistration(@PathVariable Integer id, Model model) {
         Registration registration = registrationRepository.findById(id)
@@ -58,10 +55,6 @@ public class RegistrationController {
 
         return "participantDetails";
     }
-
-
-
-
 
     @PostMapping("/update")
     public String updateRegistration(@ModelAttribute Registration registration) {
@@ -104,9 +97,6 @@ public class RegistrationController {
         }
         return "redirect:/registrations";
     }
-
-
-
 
     @GetMapping("/myregistrations")
     public String viewMyRegistrations(Model model, Principal principal) {
