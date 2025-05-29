@@ -25,7 +25,7 @@ public class ActivityController {
             activities.add(a);
         }
         model.addAttribute("activities", activities);
-        return "list";
+        return "allCamps";
     }
 
     @GetMapping("/activities/{id}")
