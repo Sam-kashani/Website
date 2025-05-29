@@ -26,11 +26,9 @@
                     <span th:text="${#temporals.format(registration.registrationTime, 'HH:mm')}">Tijd</span>
                 </p>
             </div>
-            <form th:action="@{/myregistrations}" method="post" class="ms-3">
-                <input type="hidden" name="registrationId" th:value="${registration.id}" />
-                <button type="submit" class="btn btn-sm btn-outline-danger"
-                        onclick="return confirm('Ben je zeker dat je je wil uitschrijven?')">
-                    I’m not going!
+            <form th:action="@{|/unregister/${registration.camp.id}|}" method="post" class="ms-3">
+                <button type="submit" class="btn btn-sm btn-outline-danger">
+                    Uitschrijven
                 </button>
             </form>
         </div>
@@ -40,3 +38,4 @@
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
+
