@@ -1,29 +1,28 @@
 package be.thomasmore.website.controller;
 
+import be.thomasmore.website.model.Participant;
+import be.thomasmore.website.model.Registration;
+import be.thomasmore.website.model.SummerCamp;
+import be.thomasmore.website.repositories.ParticipantRepository;
+import be.thomasmore.website.repositories.RegistrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import be.thomasmore.website.model.UserRegisterForm;
-
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired private PasswordEncoder passwordEncoder;
+    private RegistrationRepository registrationRepository;
+
+    @Autowired
+    private ParticipantRepository participantRepository;
 
     @GetMapping("/user/login")
     public String login(Authentication authentication) {
@@ -36,33 +35,28 @@ public class UserController {
     @GetMapping("/user/logout")
     public String logout(Authentication authentication) {
         if (authentication == null || !authentication.isAuthenticated()) {
-            return "redirect:/camps"; // gebruiker is al uitgelogd
+            return "redirect:/camps";
         }
         return "user/logout";
     }
-    @GetMapping("/user/register")
-    public String registerForm(Model model) {
-        model.addAttribute("userRegisterForm", new UserRegisterForm());
-        return "user/register";
-    }
 
-    @PostMapping("/user/register")
-    public String registerSubmit(@ModelAttribute UserRegisterForm userRegisterForm,
-                                 HttpServletRequest request) {
-        String username = userRegisterForm.getUsername();
-        String password = passwordEncoder.encode(userRegisterForm.getPassword());
+    @ModelAttribute("myCamps")
+    public List<SummerCamp> populateMyCamps(Principal principal) {
+        if (principal == null) return null;
 
-        jdbcTemplate.update("INSERT INTO users (username, password, enabled) VALUES (?, ?, true)",
-                username, password);
-        jdbcTemplate.update("INSERT INTO authorities (username, authority) VALUES (?, ?)",
-                username, "ROLE_USER");
+        Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
+        if (optionalParticipant.isPresent()) {
+            Participant participant = optionalParticipant.get();
+            List<Registration> registrations = registrationRepository.findByParticipant(participant);
 
-        UsernamePasswordAuthenticationToken authToken =
-                new UsernamePasswordAuthenticationToken(username, null, List.of(() -> "ROLE_USER"));
-        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+            List<SummerCamp> camps = new ArrayList<>();
+            for (Registration reg : registrations) {
+                camps.add(reg.getCamp());
+            }
 
-        return "redirect:/camps";
+            return camps;
+        }
+        return null;
     }
 
 
