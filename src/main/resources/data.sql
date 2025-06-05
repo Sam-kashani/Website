@@ -12,17 +12,17 @@ INSERT INTO summer_camp (id, name, location, max_participants, price, descriptio
                                                                                              (10, 'Dierenkamp', 'Mol', 14, 195.00, 'Verzorgen van dieren en leren over natuur.', 'Avontuurlijk');
 
 -- Participants
-INSERT INTO participant (id, name, email, age, username) VALUES
-                                                             (1, 'Lotte Janssen','lotte.j@example.com', 12, 'lotte'),
-                                                             (2, 'Arne Peeters','arne.p@example.com', 14, 'arne'),
-                                                             (3, 'Mila De Smet','mila.d@example.com', 13, 'mila'),
-                                                             (4, 'Jules Maes','jules.m@example.com', 11, 'jules'),
-                                                             (5, 'Nora Willems','nora.w@example.com', 15, 'nora'),
-                                                             (6, 'Seppe Goossens','seppe.g@example.com', 12, 'seppe'),
-                                                             (7, 'Emma Van Dijk','emma.v@example.com', 13, 'emma'),
-                                                             (8, 'Liam Verstraeten','liam.v@example.com', 14, 'liam'),
-                                                             (9, 'Zoë Hermans','zoe.h@example.com',  11, 'zoe'),
-                                                             (10, 'Finn Claes','finn.c@example.com', 13, 'finn');
+INSERT INTO participant (name, email, age, username) VALUES
+                                                             ('Lotte Janssen','lotte.j@example.com', 12, 'lotte'),
+                                                             ('Arne Peeters','arne.p@example.com', 14, 'arne'),
+                                                             ('Mila De Smet','mila.d@example.com', 13, 'mila'),
+                                                             ('Jules Maes','jules.m@example.com', 11, 'jules'),
+                                                             ('Nora Willems','nora.w@example.com', 15, 'nora'),
+                                                             ('Seppe Goossens','seppe.g@example.com', 12, 'seppe'),
+                                                             ('Emma Van Dijk','emma.v@example.com', 13, 'emma'),
+                                                             ('Liam Verstraeten','liam.v@example.com', 14, 'liam'),
+                                                             ('Zoë Hermans','zoe.h@example.com',  11, 'zoe'),
+                                                             ('Finn Claes','finn.c@example.com', 13, 'finn');
 
 -- Activities
 INSERT INTO activity (id, name, description, summer_camp_id) VALUES
