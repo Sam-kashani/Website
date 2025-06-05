@@ -128,13 +128,18 @@ public class UserController {
         return "redirect:/camps?registered=true";
 
     }
+    @GetMapping("/user/profile")
+    public String showProfile(Model model, Principal principal) {
+        if (principal == null) return "redirect:/user/login";
 
+        Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
+        if (optionalParticipant.isPresent()) {
+            model.addAttribute("participant", optionalParticipant.get());
+            return "user/profile";
+        }
 
-
-
-
-
-
+        return "redirect:/camps";
+    }
 }
 
 
