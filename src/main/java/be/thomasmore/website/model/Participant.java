@@ -12,6 +12,7 @@ public class Participant {
     private String name;
     private String email;
     private int age;
+    @Column(unique = true)
     private String username;
     @ManyToMany
     private Set<SummerCamp> camps;
