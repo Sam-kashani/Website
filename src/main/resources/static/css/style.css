@@ -1,0 +1,80 @@
+body {
+    background: linear-gradient(to right, #e0f7fa, #ffffff);
+    padding-bottom: 100px;
+}
+.camp-card:hover {
+    transform: scale(1.015);
+    transition: transform 0.2s ease-in-out;
+}
+.badge-type {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+.btn-main {
+    background: linear-gradient(135deg, #00b4d8, #0077b6);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    box-shadow: 0 4px 10px rgba(0, 119, 182, 0.25);
+    transition: all 0.3s ease;
+}
+
+.btn-main:hover {
+    background: linear-gradient(135deg, #0096c7, #023e8a);
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(0, 119, 182, 0.35);
+}
+
+.btn-outline-main {
+    background: transparent;
+    color: #0077b6;
+    border: 2px solid #0077b6;
+    border-radius: 30px;
+    font-weight: 500;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-main:hover {
+    background-color: #0077b6;
+    color: white;
+    transform: scale(1.05);
+}
+
+.camp-card:hover {
+    transform: scale(1.015);
+    transition: transform 0.2s ease-in-out;
+}
+
+.badge-type {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+footer {
+    background-color: white;
+    color: #666;
+    padding: 1.5rem 0;
+    font-size: 0.9rem;
+    border-top: 1px solid #ddd;
+}
+.btn-logout-contrast {
+    background-color: white;
+    color: #0d6efd;
+    border: none;
+    border-radius: 30px;
+    padding: 0.4rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-logout-contrast:hover {
+    background-color: #0b5ed7;
+    color: white;
+    transform: scale(1.05);
+}
+#footerID{
+    opacity: 0.60;
+}
