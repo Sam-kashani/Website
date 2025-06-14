@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Kamp Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
 <div th:insert="~{fragments/header :: header}"></div>
@@ -18,8 +21,10 @@
             <h4 class="card-title fw-bold" th:text="${camp.name}">Kampnaam</h4>
             <p class="card-text">
                 <strong>Locatie:</strong> <span th:text="${camp.location}"></span><br>
-                <strong>Max. deelnemers:</strong> <span th:text="${camp.maxParticipants}"></span><br>
-                <strong>Prijs:</strong> €<span th:text="${camp.price}"></span><br>
+                <strong>Max. deelnemers:</strong>
+                <span th:text="${camp.maxParticipants == 0} ? 'Onbeperkt' : ${camp.maxParticipants}+' deelnemers max'"></span><br>
+                <strong>Prijs:</strong>
+                <span th:text="${camp.price == 0} ? 'Gratis' : ${camp.price}+'€'"></span><br>
                 <strong>Type:</strong> <span th:text="${camp.type}"></span><br>
                 <strong>Beschrijving:</strong> <span th:text="${camp.description}"></span>
             </p>
@@ -40,6 +45,15 @@
                 <p class="mb-0" th:text="${activity.description}">Beschrijving</p>
             </div>
         </div>
+    </div>
+
+    <div class="mt-4" sec:authorize="hasAuthority('ROLE_ADMIN')">
+        <a th:href="@{|/campedit/${camp.id}|}" class="btn btn-warning me-2">✏️ Bewerken</a>
+
+        <form th:action="@{|/campdelete/${camp.id}|}" method="post" style="display:inline;"
+              onsubmit="return confirm('Weet je zeker dat je dit kamp wil verwijderen?');">
+            <button type="submit" class="btn btn-outline-danger">🗑️ Verwijderen</button>
+        </form>
     </div>
 
     <div class="mt-5" sec:authorize="hasAuthority('ROLE_USER')">
@@ -64,6 +78,7 @@
 
 </div>
 
-<div th:insert="~{fragments/footer :: footer}"></div>
 </body>
+<div th:insert="~{fragments/footer :: footer}"></div>
+
 </html>
