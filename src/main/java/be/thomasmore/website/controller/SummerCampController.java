@@ -8,11 +8,10 @@ import be.thomasmore.website.repositories.RegistrationRepository;
 import be.thomasmore.website.repositories.SummerCampRepository;
 import be.thomasmore.website.repositories.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -72,7 +71,6 @@ public class SummerCampController {
     }
 
 
-
     @GetMapping("/camps")
     public String filterCamps(Model model,
                               @RequestParam(required = false) String name,
@@ -85,4 +83,38 @@ public class SummerCampController {
         model.addAttribute("camps", camps);
         return "allCamps";
     }
+    @GetMapping("/campnew")
+    public String showNewCampForm(Model model) {
+        model.addAttribute("camp", new SummerCamp());
+        return "campform";
+    }
+
+    @PostMapping("/campnew")
+    public String saveNewCamp(@ModelAttribute("camp") SummerCamp camp) {
+        summerCampRepository.save(camp);
+        return "redirect:/camps";
+    }
+    @GetMapping("/campedit/{id}")
+    public String showEditCampForm(@PathVariable int id, Model model) {
+        SummerCamp camp = summerCampRepository.findById(id).orElse(null);
+        if (camp == null) return "redirect:/camps";
+        model.addAttribute("camp", camp);
+        return "campedit";
+    }
+    @PostMapping("/campedit/{id}")
+    public String updateCamp(@PathVariable int id, @ModelAttribute("camp") SummerCamp updatedCamp) {
+        updatedCamp.setId(id);
+        summerCampRepository.save(updatedCamp);
+        return "redirect:/campgreeting/" + id;
+    }
+
+    @PostMapping("/campdelete/{id}")
+    public String deleteCamp(@PathVariable int id) {
+        summerCampRepository.deleteById(id);
+        return "redirect:/camps";
+    }
+
+
+
+
 }

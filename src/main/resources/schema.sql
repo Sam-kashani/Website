@@ -9,3 +9,4 @@ CREATE TABLE authorities (
                              authority VARCHAR(50) NOT NULL,
                              CONSTRAINT fk_username FOREIGN KEY(username) REFERENCES users(username)
 );
+

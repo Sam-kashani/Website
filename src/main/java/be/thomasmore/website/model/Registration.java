@@ -13,11 +13,11 @@ public class Registration {
     private LocalDate registrationDate;
     private LocalTime registrationTime;
     @ManyToOne
-    @JoinColumn(name = "participant_id") // FK in REGISTRATION table
+    @JoinColumn(name = "participant_id")
     private Participant participant;
 
     @ManyToOne
-    @JoinColumn(name = "camp_id") // FK in REGISTRATION table
+    @JoinColumn(name = "camp_id")
     private SummerCamp camp;
 
     public Integer getId() {
