@@ -1,15 +1,16 @@
 -- SummerCamps
-INSERT INTO summer_camp (id, name, location, max_participants, price, description, type) VALUES
-                                                                                             (1, 'Avonturenkamp', 'Durbuy', 25, 250.00, 'Kamp vol avontuur en natuur.', 'Avontuurlijk'),
-                                                                                             (2, 'Knutselkamp', 'Leuven', 20, 180.00, 'Creatief kamp met schilderen en knutselen.', 'Creatief'),
-                                                                                             (3, 'Natuurkamp', 'Maaseik', 15, 190.00, 'Ontdekkingskamp in het bos.', 'Avontuurlijk'),
-                                                                                             (4, 'Sportkamp', 'Antwerpen', 30, 210.00, 'Sport en spel voor actieve jongeren.', 'Avontuurlijk'),
-                                                                                             (5, 'Muziekkamp', 'Gent', 18, 220.00, 'Samen muziek maken en optreden.', 'Creatief'),
-                                                                                             (6, 'Talenkamp', 'Brugge', 22, 200.00, 'Nederlands en Frans op een speelse manier.', 'Creatief'),
-                                                                                             (7, 'Watersportkamp', 'Oostende', 16, 230.00, 'Zee, kajakken, suppen en plezier.', 'Avontuurlijk'),
-                                                                                             (8, 'Theaterkamp', 'Kortrijk', 12, 175.00, 'Toneel, improvisatie en optreden.', 'Creatief'),
-                                                                                             (9, 'STEM-kamp', 'Hasselt', 24, 240.00, 'Programmeren en technische opdrachten.', 'Techniek'),
-                                                                                             (10, 'Dierenkamp', 'Mol', 14, 195.00, 'Verzorgen van dieren en leren over natuur.', 'Avontuurlijk');
+INSERT INTO summer_camp ( name, location, max_participants, price, description, type) VALUES
+                                                                                             ( 'Avonturenkamp', 'Durbuy', 25, 250.00, '1–7 juli 2025. Klimmen, speurtochten, vlotten bouwen en kampvuur in de Ardennen.', 'Avontuurlijk'),
+                                                                                             ( 'Knutselkamp', 'Leuven', 20, 180.00, '8–12 juli 2025. Kinderen maken kunst met verf, papier-maché en textiel, afsluitend met een expo.', 'Creatief'),
+                                                                                             ( 'Natuurkamp', 'Maaseik', 15, 190.00, '15–20 juli 2025. Ontdek het bos, leer over dieren, bouw een hut en hou een natuurdagboek bij.', 'Avontuurlijk'),
+                                                                                             ( 'Sportkamp', 'Antwerpen', 30, 210.00, '22–28 juli 2025. Dagelijks sport en spel: voetbal, turnen, atletiek en een mini-Olympische dag.', 'Avontuurlijk'),
+                                                                                             ( 'Muziekkamp', 'Gent', 18, 220.00, '29 juli–3 aug 2025. Instrumenten ontdekken, samen muziek maken en optreden voor publiek.', 'Creatief'),
+                                                                                             ( 'Talenkamp', 'Brugge', 22, 200.00, '5–10 aug 2025. Leer spelenderwijs Frans en Nederlands via theater, zang en leuke taalspellen.', 'Creatief'),
+                                                                                             ( 'Watersportkamp', 'Oostende', 16, 230.00, '12–17 aug 2025. Kajakken, suppen, strandspelen en veilige begeleiding door monitoren.', 'Avontuurlijk'),
+                                                                                             ( 'Theaterkamp', 'Kortrijk', 12, 175.00, '19–23 aug 2025. Improvisatie, script en expressie leiden tot een echte voorstelling.', 'Creatief'),
+                                                                                             ( 'STEM-kamp', 'Hasselt', 24, 240.00, '26–31 aug 2025. Programmeer in Scratch en Python, bouw robots en doe proefjes.', 'Techniek'),
+                                                                                             ( 'Dierenkamp', 'Mol', 14, 195.00, '19–24 aug 2025. Verzorg dieren, bezoek een boerderij en leer alles over hun gedrag.', 'Avontuurlijk');
+
 
 -- Participants
 INSERT INTO participant (name, email, age, username) VALUES
@@ -35,7 +36,47 @@ INSERT INTO activity (id, name, description, summer_camp_id) VALUES
                                                                  (7, 'Taalspelletjes', 'Interactieve taaloefeningen', 6),
                                                                  (8, 'Zeekajak', 'Kajakken op zee', 7),
                                                                  (9, 'Improvisatietheater', 'Toneel spelen zonder script', 8),
-                                                                 (10, 'Robot bouwen', 'Techniekactiviteit met robotjes', 9);
+                                                                 (10, 'Robot bouwen', 'Techniekactiviteit met robotjes', 9),
+                                                                 (11, 'Speurtocht in het bos', 'Een interactieve zoektocht met opdrachten en raadsels in het woud.', 1),
+                                                                 (12, 'Touwenparcours', 'Uitdagend parcours tussen bomen met touwen en netten.', 1),
+                                                                 (13, 'Nachtspel', 'Spannende avondactiviteit met zaklampen en teamwork.', 1),
+
+                                                                 (14, 'Papier-maché maken', 'Een creatief project met lijm en krantenpapier.', 2),
+                                                                 (15, 'Knutselhoek met recyclagemateriaal', 'Knutselen met herbruikbare materialen, goed voor het milieu.', 2),
+                                                                 (16, 'Textielkunst', 'Ontwerpen van een stoffen tas of vlag met textielverf.', 2),
+
+                                                                 (17, 'Insectensafari', 'Op zoek naar kleine beestjes met loep en vergrootglas.', 3),
+                                                                 (18, 'Schuilhut bouwen', 'Met takken en bladeren een beschutting maken.', 3),
+                                                                 (19, 'Natuurdagboek', 'Dagelijks bijhouden van observaties in de natuur.', 3),
+
+                                                                 (20, 'Estafettewedstrijd', 'Teamspel met snelheid en coördinatie.', 4),
+                                                                 (21, 'Turnparcours', 'Behendigheidsparcours met klimrekken en springmatten.', 4),
+                                                                 (22, 'Basketbalclinic', 'Training en wedstrijdjes met technieken en spelinzicht.', 4),
+
+                                                                 (23, 'Zangworkshop', 'Leren zingen in groep en solo met stemcoaching.', 5),
+                                                                 (24, 'Percussiesessie', 'Ritmegevoel ontwikkelen met djembe en cajón.', 5),
+                                                                 (25, 'Eigen liedje schrijven', 'Individueel of in groep een nieuw nummer bedenken.', 5),
+
+                                                                 (26, 'Stripverhaal maken', 'Franstalige en Nederlandstalige strip creëren met tekstballonnen.', 6),
+                                                                 (27, 'Taalbingo', 'Spelvorm om nieuwe woorden en zinnen te oefenen.', 6),
+                                                                 (28, 'Mini-theater', 'Sketches voorbereiden en opvoeren in twee talen.', 6),
+
+                                                                 (29, 'Suppen', 'Balans houden en peddelen op een surfplank.', 7),
+                                                                 (30, 'Strandspelen', 'Teamactiviteiten zoals zandkastelenwedstrijd of strandvoetbal.', 7),
+                                                                 (31, 'Zee-schattenjacht', 'Zoektocht naar verborgen voorwerpen op het strand en in de duinen.', 7),
+
+                                                                 (32, 'Kostuums maken', 'Zelf kostuums ontwerpen en knutselen voor de voorstelling.', 8),
+                                                                 (33, 'Stem- en ademhalingstraining', 'Oefeningen om duidelijk en expressief te spreken.', 8),
+                                                                 (34, 'Toneeltechniek', 'Werken met rekwisieten, licht en geluid.', 8),
+
+                                                                 (35, 'Programmeren met Scratch', 'Visueel leren programmeren via blokjes en logica.', 9),
+                                                                 (36, 'Wetenschappelijk experiment', 'Veilig chemisch proefje zoals slijm maken of vulkaanuitbarsting.', 9),
+                                                                 (37, 'Brug bouwen', 'Met spaghetti of karton een stevige constructie maken.', 9),
+
+                                                                 (38, 'Dieren voederen', 'Meehelpen met het verzorgen en voederen van dieren.', 10),
+                                                                 (39, 'Hondenwandeling', 'Samen wandelen met hondjes van het dierenasiel.', 10),
+                                                                 (40, 'Dierenquiz', 'Educatieve quiz over dierenkennis en leefomgevingen.', 10);
+
 
 -- Registrations (zonder ID, wordt automatisch gegenereerd)
 INSERT INTO registration (participant_id, camp_id, registration_date, registration_time) VALUES
