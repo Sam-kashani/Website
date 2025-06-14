@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nieuw Kamp</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Nieuw zomerkamp</h2>
+    <form th:action="@{/campnew}" th:object="${camp}" method="post">
+        <div class="mb-3">
+            <label class="form-label">Naam</label>
+            <input type="text" th:field="*{name}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Locatie</label>
+            <input type="text" th:field="*{location}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Prijs</label>
+            <input type="number" th:field="*{price}" step="0.01" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Max. deelnemers</label>
+            <input type="number" th:field="*{maxParticipants}" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Type</label>
+            <select th:field="*{type}" class="form-select">
+                <option value="Avontuurlijk">Avontuurlijk</option>
+                <option value="Creatief">Creatief</option>
+                <option value="Techniek">Techniek</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Beschrijving:</label>
+            <input type="text" th:field="*{description}" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Aanmaken</button>
+        <a th:href="@{/camps}" class="btn btn-secondary">Annuleer</a>
+    </form>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
