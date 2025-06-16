@@ -9,12 +9,21 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
+
 <div class="container my-5">
     <div class="card shadow-lg rounded-4 p-4">
-        <h2 class="mb-4 text-center fw-bold">
-            <i class="bi bi-list-ul me-2"></i> Overzicht van alle Inschrijvingen
-        </h2>
-
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0 fw-bold">
+                <i class="bi bi-list-ul me-2"></i> Overzicht van alle Inschrijvingen
+            </h2>
+            <form method="get" class="d-flex" th:action="@{/registrations}">
+                <input type="search" id="textFilter" name="textFilter"
+                       th:value="${param.textFilter}"
+                       class="form-control form-control-sm me-2"
+                       placeholder="Zoek deelnemer of kamp">
+                <button type="submit" class="btn btn-outline-primary btn-sm">Zoek</button>
+            </form>
+        </div>
         <div class="table-responsive">
             <table class="table table-hover table-bordered align-middle text-center">
                 <thead class="table-light">

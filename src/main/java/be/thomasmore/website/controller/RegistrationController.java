@@ -29,10 +29,8 @@ public class RegistrationController {
     private SummerCampRepository summerCampRepository;
 
     @GetMapping("/registrations")
-    public String listRegistrations(Model model) {
-        List<Registration> registrations = new ArrayList<>();
-        registrationRepository.findAll().forEach(registrations::add);
-
+    public String listRegistrations(Model model,  @RequestParam(required = false) String textFilter) {
+        List<Registration> registrations = registrationRepository.findByFilter(textFilter);
         model.addAttribute("registrations", registrations);
         return "allRegistered";
     }
@@ -44,7 +42,7 @@ public class RegistrationController {
         return "redirect:/registrations";
     }
     @PostMapping("/register")
-    public String registerForCamp(@RequestParam Integer campId, Principal principal) {
+    public String registerForCamp(@RequestParam(required = false) Integer campId, Principal principal) {
         if (principal == null) return "redirect:/login";
 
         Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
@@ -68,7 +66,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/admin/unregister")
-    public String unregisterAsAdmin(@RequestParam Integer participantId, @RequestParam Integer campId) {
+    public String unregisterAsAdmin(@RequestParam(required = false) Integer participantId, @RequestParam(required = false) Integer campId) {
         Participant participant = participantRepository.findById(participantId)
                 .orElseThrow(() -> new RuntimeException("Participant niet gevonden"));
         SummerCamp camp = summerCampRepository.findById(campId)

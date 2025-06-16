@@ -95,21 +95,21 @@ public class SummerCampController {
         return "redirect:/camps";
     }
     @GetMapping("/campedit/{id}")
-    public String showEditCampForm(@PathVariable int id, Model model) {
+    public String showEditCampForm(@PathVariable(required = false) int id, Model model) {
         SummerCamp camp = summerCampRepository.findById(id).orElse(null);
         if (camp == null) return "redirect:/camps";
         model.addAttribute("camp", camp);
         return "campedit";
     }
     @PostMapping("/campedit/{id}")
-    public String updateCamp(@PathVariable int id, @ModelAttribute("camp") SummerCamp updatedCamp) {
+    public String updateCamp(@PathVariable(required = false) int id, @ModelAttribute("camp") SummerCamp updatedCamp) {
         updatedCamp.setId(id);
         summerCampRepository.save(updatedCamp);
         return "redirect:/campgreeting/" + id;
     }
 
     @PostMapping("/campdelete/{id}")
-    public String deleteCamp(@PathVariable int id) {
+    public String deleteCamp(@PathVariable(required = false) int id) {
         summerCampRepository.deleteById(id);
         return "redirect:/camps";
     }

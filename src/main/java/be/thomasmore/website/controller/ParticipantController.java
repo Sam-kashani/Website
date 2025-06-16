@@ -37,7 +37,7 @@ public class ParticipantController {
     }
 
     @GetMapping("/participant/{id}")
-    public String participantDetails(@PathVariable Integer id, Model model) {
+    public String participantDetails(@PathVariable(required = false) Integer id, Model model) {
         Participant participant = participantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Participant niet gevonden"));
 
