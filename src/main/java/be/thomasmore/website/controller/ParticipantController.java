@@ -32,11 +32,7 @@ public class ParticipantController {
     @GetMapping("/participants")
     public String participantList(Model model) {
         Iterable<Participant> iterable = participantRepository.findAll();
-        List<Participant> participants = new ArrayList<>();
-        for (Participant p : iterable) {
-            participants.add(p);
-        }
-        model.addAttribute("participants", participants);
+        model.addAttribute("participants", iterable);
         return "allParticipant";
     }
 
@@ -57,24 +53,4 @@ public class ParticipantController {
         return "participantDetails";
     }
 
-
-
-    @PostMapping("/camps/{id}/leave")
-    public String leaveCamp(@PathVariable Integer id, Principal principal) {
-        if (principal == null) return "redirect:/login";
-
-        String username = principal.getName();
-        Participant participant = participantRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Geen participant gevonden voor username: " + username));
-
-        SummerCamp camp = summerCampRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Kamp niet gevonden"));
-
-        Registration registration = registrationRepository.findByParticipantAndCamp(participant, camp);
-        if (registration != null) {
-            registrationRepository.delete(registration);
-        }
-
-        return "redirect:/camps/" + id;
-    }
 }
