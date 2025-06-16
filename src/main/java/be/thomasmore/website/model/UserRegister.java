@@ -1,9 +1,6 @@
 package be.thomasmore.website.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 public class UserRegister {
 
@@ -11,6 +8,11 @@ public class UserRegister {
     private String username;
 
     @NotBlank(message = "Wachtwoord is verplicht")
+    @Size(min = 6, message = "Wachtwoord moet minstens 6 tekens bevatten")
+    @Pattern(
+            regexp = "^(?=.*[A-Z]).{6,}$",
+            message = "Wachtwoord moet minstens één hoofdletter bevatten"
+    )
     private String password;
 
     @NotBlank(message = "Naam is verplicht")
