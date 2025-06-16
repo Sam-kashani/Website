@@ -31,7 +31,7 @@
           <form th:action="@{/user/register}" th:object="${userRegister}" method="post" novalidate>
             <div class="mb-3">
               <label for="username" class="form-label">Gebruikersnaam</label>
-              <input id="username" th:field="*{username}" class="form-control" required />
+              <input id="username" th:field="*{username}" class="form-control" required autofocus/>
             </div>
 
             <div class="mb-3">
