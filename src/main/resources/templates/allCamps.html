@@ -11,10 +11,10 @@
 <div th:replace="fragments/header :: header"></div>
 <div class="container">
     <div class="mb-4">
-        <div th:if="${param.registered}" class="alert alert-success shadow-sm text-center rounded-pill">
+        <div th:if="${param.registered}" class="alert alert-success shadow-sm text-center rounded-pill m-4">
             <i class="bi bi-check-circle-fill"></i> Je bent succesvol geregistreerd!
         </div>
-        <div th:if="${param.logout}" class="alert alert-info shadow-sm text-center rounded-pill">
+        <div th:if="${param.logout}" class="alert alert-info shadow-sm text-center rounded-pill m-4">
             <i class="bi bi-door-open-fill"></i> Je bent succesvol uitgelogd.
         </div>
     </div>
