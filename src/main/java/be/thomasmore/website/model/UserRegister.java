@@ -10,7 +10,7 @@ public class UserRegister {
     @NotBlank(message = "Wachtwoord is verplicht")
     @Size(min = 6, message = "Wachtwoord moet minstens 6 tekens bevatten")
     @Pattern(
-            regexp = "^(?=.*[A-Z]).{6,}$",
+            regexp = "^(?=.*[A-Z])$",
             message = "Wachtwoord moet minstens één hoofdletter bevatten"
     )
     private String password;
