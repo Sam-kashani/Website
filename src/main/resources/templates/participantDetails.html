@@ -23,18 +23,20 @@
             </p>
         </div>
     </div>
+    <a class="btn btn-outline-secondary" th:href="@{/participants}">Ga naar gebruikerslijst</a>
 
     <h4>Ingeschreven Kampen</h4>
     <div th:if="${#lists.isEmpty(camps)}">
         <p class="text-muted fst-italic">Deze deelnemer is nog niet ingeschreven voor een kamp.</p>
     </div>
+
     <div th:unless="${#lists.isEmpty(camps)}" class="list-group mb-4">
         <a th:each="camp : ${camps}" class="list-group-item list-group-item-action" th:href="@{'/campgreeting/' + ${camp.id}}">
             <span th:text="${camp.name}">Kampnaam</span>
         </a>
     </div>
 
-    <a class="btn btn-outline-secondary" th:href="@{/registrations}">Terug naar inschrijvingen</a>
+    <a class="btn btn-outline-secondary" th:href="@{/registrations}">Ga naar inschrijvingen</a>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
