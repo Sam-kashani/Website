@@ -44,9 +44,8 @@ public class SecurityConfiguration {
                 );
 
         if (h2ConsoleNeeded) {
-            // h2ConsoleNeeded = true → enkel lokaal
             http.csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()));
-            http.headers(HeadersConfigurer::disable); // ✅ nieuwe correcte aanpak
+            http.headers(HeadersConfigurer::disable);
         }
 
         return http.build();

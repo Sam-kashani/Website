@@ -28,11 +28,5 @@ public class ActivityController {
         return "allCamps";
     }
 
-    @GetMapping("/activities/{id}")
-    public String detailActivity(@PathVariable Integer id, Model model) {
-        Activity activity = activityRepository.findById(id).orElse(null);
-        if (activity == null) return "error";
-        model.addAttribute("activity", activity);
-        return "detail";
-    }
+
 }
