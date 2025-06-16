@@ -31,8 +31,8 @@ public class ParticipantController {
 
     @GetMapping("/participants")
     public String participantList(Model model) {
-        Iterable<Participant> iterable = participantRepository.findAll();
-        model.addAttribute("participants", iterable);
+        List<Participant> participants = participantRepository.findAllByOrderByNameAsc();
+        model.addAttribute("participants", participants);
         return "allParticipant";
     }
 
