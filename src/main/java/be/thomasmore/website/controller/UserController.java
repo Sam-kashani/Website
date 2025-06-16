@@ -59,25 +59,6 @@ public class UserController {
     }
 
 
-    @ModelAttribute("myCamps")
-    public List<SummerCamp> populateMyCamps(Principal principal) {
-        if (principal == null) return null;
-
-        Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
-        if (optionalParticipant.isPresent()) {
-            Participant participant = optionalParticipant.get();
-            List<Registration> registrations = registrationRepository.findByParticipant(participant);
-
-            List<SummerCamp> camps = new ArrayList<>();
-            for (Registration reg : registrations) {
-                camps.add(reg.getCamp());
-            }
-
-            return camps;
-        }
-        return null;
-    }
-
     @GetMapping("/user/register")
     public String showRegisterPage(Model model, Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
