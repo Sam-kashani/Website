@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                         .loginPage("/user/login")
                         .loginProcessingUrl("/user/login")
                         .defaultSuccessUrl("/camps", true)
+                        .failureUrl("/user/login?error")
                         .permitAll()
                 )
                 .logout(logout -> logout
