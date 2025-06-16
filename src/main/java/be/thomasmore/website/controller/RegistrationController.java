@@ -37,24 +37,6 @@ public class RegistrationController {
         return "allRegistered";
     }
 
-    @GetMapping("/registrations/edit/{id}")
-    public String showParticipantDetailsFromRegistration(@PathVariable Integer id, Model model) {
-        Registration registration = registrationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Inschrijving niet gevonden"));
-
-        Participant participant = registration.getParticipant();
-        List<Registration> allRegistrations = registrationRepository.findByParticipant(participant);
-
-        List<SummerCamp> registeredCamps = new ArrayList<>();
-        for (Registration reg : allRegistrations) {
-            registeredCamps.add(reg.getCamp());
-        }
-
-        model.addAttribute("participant", participant);
-        model.addAttribute("camps", registeredCamps);
-
-        return "participantDetails";
-    }
 
     @PostMapping("/update")
     public String updateRegistration(@ModelAttribute Registration registration) {

@@ -51,7 +51,7 @@
 
             <div class="mb-3">
               <label for="age" class="form-label">Leeftijd</label>
-              <input id="age" type="number" th:field="*{age}" class="form-control" min="0" required />
+              <input id="age" type="number" th:field="*{age}" class="form-control" min="12" required />
             </div>
 
             <div th:if="${#fields.hasErrors()}" class="alert alert-danger">

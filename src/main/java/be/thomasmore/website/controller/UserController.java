@@ -6,6 +6,7 @@ import be.thomasmore.website.model.SummerCamp;
 import be.thomasmore.website.model.UserRegister;
 import be.thomasmore.website.repositories.ParticipantRepository;
 import be.thomasmore.website.repositories.RegistrationRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,18 +71,25 @@ public class UserController {
     }
 
     @PostMapping("/user/register")
-    public String processRegister(@ModelAttribute("userRegister") UserRegister userRegister, Model model) {
+    public String processRegister(@Valid @ModelAttribute("userRegister") UserRegister userRegister,
+                                  BindingResult bindingResult,
+                                  Model model) {
+
+        if (bindingResult.hasErrors()) {
+            return "user/register";
+        }
+
         SqlRowSet rowSet = jdbcTemplate.queryForRowSet(
                 "SELECT username FROM users WHERE username = ?",
                 userRegister.getUsername()
         );
 
         if (rowSet.next()) {
-            model.addAttribute("userRegister", userRegister);
             model.addAttribute("usernameExists", true);
             return "user/register";
         }
 
+        // DB inserts
         jdbcTemplate.update(
                 "INSERT INTO users(username, password, enabled) VALUES (?, ?, true)",
                 userRegister.getUsername(),
@@ -107,8 +116,8 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authRequest);
 
         return "redirect:/camps?registered=true";
-
     }
+
     @GetMapping("/user/profile")
     public String showProfile(Model model, Principal principal) {
         if (principal == null) return "redirect:/user/login";
