@@ -7,6 +7,7 @@ import be.thomasmore.website.repositories.ParticipantRepository;
 import be.thomasmore.website.repositories.RegistrationRepository;
 import be.thomasmore.website.repositories.SummerCampRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ public class ParticipantController {
     @Autowired
     private SummerCampRepository summerCampRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/participants")
     public String participantList(Model model) {
         List<Participant> participants = participantRepository.findAllByOrderByNameAsc();
@@ -36,6 +38,7 @@ public class ParticipantController {
         return "allParticipant";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/participant/{id}")
     public String participantDetails(@PathVariable(required = false) Integer id, Model model) {
         Participant participant = participantRepository.findById(id)

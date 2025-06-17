@@ -7,6 +7,7 @@ import be.thomasmore.website.repositories.RegistrationRepository;
 import be.thomasmore.website.repositories.ParticipantRepository;
 import be.thomasmore.website.repositories.SummerCampRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,7 @@ public class RegistrationController {
     @Autowired
     private SummerCampRepository summerCampRepository;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/registrations")
     public String listRegistrations(Model model,  @RequestParam(required = false) String textFilter) {
         List<Registration> registrations = registrationRepository.findByFilter(textFilter);
@@ -41,6 +43,7 @@ public class RegistrationController {
         registrationRepository.save(registration);
         return "redirect:/registrations";
     }
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/register")
     public String registerForCamp(@RequestParam(required = false) Integer campId, Principal principal) {
         if (principal == null) return "redirect:/login";
@@ -65,6 +68,7 @@ public class RegistrationController {
         return "redirect:/campgreeting/" + campId;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/unregister")
     public String unregisterAsAdmin(@RequestParam(required = false) Integer participantId, @RequestParam(required = false) Integer campId) {
         Participant participant = participantRepository.findById(participantId)
@@ -78,13 +82,9 @@ public class RegistrationController {
         return "redirect:/registrations";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/myregistrations")
     public String viewMyRegistrations(Model model, Principal principal) {
-        if (principal == null) {
-            model.addAttribute("registrations", Collections.emptyList());
-            return "myRegistrations";
-        }
-
         Optional<Participant> optionalParticipant = participantRepository.findByUsername(principal.getName());
         if (optionalParticipant.isPresent()) {
             List<Registration> registrations = registrationRepository.findByParticipant(optionalParticipant.get());
@@ -96,6 +96,7 @@ public class RegistrationController {
         return "myRegistrations";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/unregister/{campId}")
     public String unregister(@PathVariable Integer campId, Principal principal) {
         String username = principal.getName();
