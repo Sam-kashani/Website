@@ -38,7 +38,7 @@
 
     <div class="mt-4">
         <h4 class="fw-bold mb-3">Activiteiten van dit kamp</h4>
-        <div class="list-group">
+        <div class="list-group mb-5">
             <div class="list-group-item list-group-item-action" th:each="activity : ${activities}"
                  th:if="${activity.summerCampId == camp.id}">
                 <h6 class="mb-1 fw-semibold" th:text="${activity.name}">Activiteit</h6>
@@ -48,11 +48,11 @@
     </div>
 
     <div class="mt-4" sec:authorize="hasAuthority('ROLE_ADMIN')">
-        <a th:href="@{|/campedit/${camp.id}|}" class="btn btn-warning me-2">✏️ Bewerken</a>
+        <a th:href="@{|/campedit/${camp.id}|}" class="btn btn-warning me-2 mb-5">✏️ Bewerken</a>
 
         <form th:action="@{|/campdelete/${camp.id}|}" method="post" style="display:inline;"
               onsubmit="return confirm('Weet je zeker dat je dit kamp wil verwijderen?');">
-            <button type="submit" class="btn btn-outline-danger">🗑️ Verwijderen</button>
+            <button type="submit" class="btn btn-outline-danger mb-5">🗑️ Verwijderen</button>
         </form>
     </div>
 
@@ -61,11 +61,11 @@
 
             <form th:action="@{/register}" method="post" th:if="${isRegistered == false}">
                 <input type="hidden" name="campId" th:value="${camp.id}" />
-                <button type="submit" class="btn btn-success">✅ Inschrijven</button>
+                <button type="submit" class="btn btn-success mb-5">✅ Inschrijven</button>
             </form>
 
             <form th:action="@{|/unregister/${camp.id}|}" method="post" th:if="${isRegistered == true}">
-                <button type="submit" class="btn btn-danger">❌ Uitschrijven</button>
+                <button type="submit" class="btn btn-danger mb-5">❌ Uitschrijven</button>
             </form>
 
 

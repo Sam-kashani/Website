@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,6 +56,7 @@ public class UserController {
         return "user/login";
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @GetMapping("/user/logout")
     public String logoutPage() {
         return "user/logout";
@@ -118,6 +120,7 @@ public class UserController {
         return "redirect:/camps?registered=true";
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user/profile")
     public String showProfile(Model model, Principal principal) {
         if (principal == null) return "redirect:/user/login";
