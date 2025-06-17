@@ -43,7 +43,13 @@
 
                     <ul class="list-unstyled text-muted mb-3 small">
                         <li><i class="bi bi-geo-alt-fill text-dark me-2"></i><span th:text="${camp.location}">Locatie</span></li>
-                        <li><i class="bi bi-cash-coin text-dark me-2"></i><span th:text="${camp.price == 0} ? 'Gratis' : ${camp.price}+'€'"></span></li>
+                        <li><i class="bi bi-cash-coin text-dark me-2"></i><th:block th:if="${camp.price == 0}">
+                            <span>Gratis</span>
+                        </th:block>
+                            <th:block th:unless="${camp.price == 0}">
+                                <span th:text="${#numbers.formatDecimal(camp.price, 1, '2')} + ' €'"></span>
+                            </th:block>
+                        </li>
                         <li><i class="bi bi-people-fill text-dark me-2"></i><span th:text="${camp.maxParticipants == 0} ? 'Onbeperkt' : ${camp.maxParticipants}+' deelnemers max'"></span></li>
                     </ul>
 
